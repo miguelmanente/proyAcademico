@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<body>
+    <header>
+        <%- include('../views/partials/header'); %>
+    </header>
+   
+     <main>
+        <div class="col-md-3 bd-2">
+                    <h4>INGRESE DATOS DEL DOCENTE</h4>
+                    <div class="card border-primary">
+                        <div class="card-body">
+                            <form action="/nuevoProfesor" method="post">
+                                <div class="form-group">
+                                    <input type="text" name="nombre" placeholder="APELLIDO NOMBRE" class="form-control border-primary">
+                                </div>
+                             <!--    <div class="form-group">
+                                    <input type="text" name="dni" placeholder="DNI" class="form-control border-primary">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="fecnac" placeholder="FECNAC" class="form-control border-primary">
+                                </div> -->
+                                <div class="form-group">
+                                    <input type="text" name="email" placeholder="EMAIL" class="form-control border-primary">
+                                </div>
+                           <!--      <div class="form-group">
+                                    <input type="text" name="telefono" placeholder="TELEFONO" class="form-control border-primary">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="direccion" placeholder="DIRECCION" class="form-control border-primary">
+                                </div> -->
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    GUARDAR DOCENTE
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<a href="/profesores">Volver</a>

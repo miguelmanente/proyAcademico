@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Profesores</title>
+  </head>
+<body>
+    <h1>Lista de Profesores</h1>
+    <table cellpadding="5">
+      <tr>
+      <th>ID</th>
+      <th>Apellido y Nombre</th>
+      <th>Email</th>
+      <th>Acciones</th>
+      </tr>
+      <% profesores.forEach(p => { %>
+      <tr>
+        <td><%= p.id_profesor %></td>
+        <td><%= p.nombre %></td>
+        <td><%= p.email %></td>
+        <td>
+        <a href="/editPro/<%= p.id_profesor %>">Editar</a>
+      </td>
+        </td>
+      </tr>
+      <% }) %>
+    </table>
+</body>
+</html>

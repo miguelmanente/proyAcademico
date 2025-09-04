@@ -1,0 +1,19 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+header {
+  background: #333;
+  padding: 30px;
+}
+header a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+footer {
+  margin-top: 20px;
+  text-align: center;
+  color: gray;
+}
+

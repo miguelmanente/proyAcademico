@@ -1,0 +1,7 @@
+<h2>Listado de Cursos</h2>
+<ul>
+  <% cursos.forEach(cur => { %>
+    <li><%= cur.nombre %> - <%= cur.nivel %></li>
+  <% }) %>
+</ul>
+<a href="/index">Volver</a>

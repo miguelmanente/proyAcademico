@@ -1,0 +1,33 @@
+<h2>Nueva Asignación</h2>
+<form action="/asignaciones/nuevo" method="POST">
+  <label>Profesor:</label>
+  <select name="id_profesor" required>
+    <% profesores.forEach(p => { %>
+      <option value="<%= p.id_profesor %>"><%= p.nombre %></option>
+    <% }) %>
+  </select><br>
+
+  <label>Materia:</label>
+  <select name="id_materia" required>
+    <% materias.forEach(m => { %>
+      <option value="<%= m.id_materia %>"><%= m.nombre %></option>
+    <% }) %>
+  </select><br>
+
+  <label>Curso:</label>
+  <select name="id_curso" required>
+    <% cursos.forEach(c => { %>
+      <option value="<%= c.id_curso %>"><%= c.nombre %></option>
+    <% }) %>
+  </select><br>
+
+  <label>Horario:</label>
+  <select name="id_horario" required>
+    <% horarios.forEach(h => { %>
+      <option value="<%= h.id_horario %>"><%= h.dia_semana %> - <%= h.hora_inicio %> a <%= h.hora_fin %></option>
+    <% }) %>
+  </select><br>
+
+  <button type="submit">Guardar</button>
+</form>
+<a href="/asignaciones">Volver</a>

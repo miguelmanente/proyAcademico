@@ -1,0 +1,7 @@
+<h2>Listado de Materiass</h2>
+<ul>
+  <% materias.forEach(mat => { %>
+    <li><%= mat.nombre %> - <%= mat.descripcion %></li>
+  <% }) %>
+</ul>
+<a href="/index">Volver</a>

@@ -1,0 +1,7 @@
+<h2>Listado de Horarios</h2>
+<ul>
+  <% horarios.forEach(hor => { %>
+    <li><%= hor.dia_semana %> - <%= hor.hora_inicio %> - <%= hor.hora_fin %></li>
+  <% }) %>
+</ul>
+<a href="/">Volver</a>
