@@ -9,7 +9,7 @@
      <main>
         <div class="container-">
             <div class="row mt-3 ml-5 mr-5 ">
-                <div class="col-md-9 text-center">
+                <div class="col-md-12 text-center">
                     <h2>INFORMACIÓN DEL DOCENTE</h2> 
                     <table class="table table-bordered table-hover table-responsive">
                         <thead>
@@ -17,6 +17,13 @@
                                 <th class="border-primary">Nº</th>
                                 <th class="border-primary">APELLIDO NOMBRE</th>
                                 <th class="border-primary">EMAIL</th>
+                                <th class="border-primary">DNI</th>
+                                <th class="border-primary">FECHA NACIMIENTO</th>
+                                <th class="border-primary">SITUACIÓN REVISTA</th>
+                                <th class="border-primary">TELEFONO</th>
+                                <th class="border-primary">TOMA POSICIÓN</th>
+                                <th class="border-primary">FIN TOMA POSICIÓN</th>
+                                <th class="border-primary">MODIFICAR DATOS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +39,27 @@
                                       
                                         <td class="border-primary">
                                             <%= data[i].email %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].dni %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].fecNac %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].sitRev %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].telefono %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].tomaPos %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].finTomaPos %>
+                                        </td>
+                                         <td class="border-primary">
+                                            <a href="/editPro/<%= data[i].id_profesor %>" class="btn btn-warning btn-sm">Editar</a>
                                         </td>
                                     </tr>
                                 <% } %>

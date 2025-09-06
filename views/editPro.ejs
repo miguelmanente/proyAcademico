@@ -1,28 +1,58 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Profesores</title>
-  </head>
+<html lang="es">
+
 <body>
-    <h1>Lista de Profesores</h1>
-    <table cellpadding="5">
-      <tr>
-      <th>ID</th>
-      <th>Apellido y Nombre</th>
-      <th>Email</th>
-      <th>Acciones</th>
-      </tr>
-      <% profesores.forEach(p => { %>
-      <tr>
-        <td><%= p.id_profesor %></td>
-        <td><%= p.nombre %></td>
-        <td><%= p.email %></td>
-        <td>
-        <a href="/editPro/<%= p.id_profesor %>">Editar</a>
-      </td>
-        </td>
-      </tr>
-      <% }) %>
-    </table>
-</body>
-</html>
+    <header>
+        <%- include('../views/partials/header'); %>
+    </header>
+   
+    <main>
+      <h1 class="text-info text-center mt-2">ACTUALIZAR Y/O MODIFICAR DATOS DEL DOCENTE</h1>
+
+      <div class="container d-flex align-items-center justify-content-center">
+        <div class="row mt-3 ml-5 mr-5 ">
+            <div class="col-md-12 text-center">
+                   <form class="form "  action="/editPro/<%= data.id_profesor %>" method="post">
+                        <div class="form-group">
+                            <input type="text" name="nombre" value="<%= data.nombre %>" class="form-control border-primary fs-5">
+                        </div>
+                      
+                        <div class="form-group">
+                            <input type="text" name="email" value="<%= data.email %>" class="form-control border-primary fs-5">
+                        </div>
+
+                         <div class="form-group">
+                            <input type="text" name="dni" value="<%= data.dni %>" class="form-control border-primary fs-5">
+                        </div>
+
+                         <div class="form-group">
+                            <input type="text" name="fecNac" value="<%= data.fecNac %>" class="form-control border-primary fs-5">
+                        </div>
+
+                         <div class="form-group">
+                            <input type="text" name="sitRev" value="<%= data.sitRev %>" class="form-control border-primary fs-5">
+                        </div>
+
+                         <div class="form-group">
+                            <input type="text" name="telefono" value="<%= data.telefono %>" class="form-control border-primary fs-5">
+                        </div>
+
+                         <div class="form-group">
+                            <input type="text" name="tomaPos" value="<%= data.tomaPos %>" class="form-control border-primary fs-5">
+                        </div>
+
+                         <div class="form-group">
+                            <input type="text" name="finTomaPos" value="<%= data.finTomaPos %>" class="form-control border-primary fs-5">
+                        </div>
+                       
+                        <button type="submit" class="btn btn-block btn-info fs-5 ">
+                            ACTUALIZAR DATOS DEL DOCENTE
+                        </button>
+                    </form> 
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+

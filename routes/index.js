@@ -71,28 +71,21 @@ router.post('/nuevoProfesor', (req, res) => {
   });
 });
 
-// Formulario editar - Listar profesores
-  router.get('/editPro', (req, res) => {
-    db.query('SELECT * FROM profesores', (err, results) => {
-      if (err) throw err;
-          res.render('editPro', { profesores: results });
-    });
-  });
 
 // Formulario para editar un profesor
   router.get('/editPro/:id_profesor', (req, res) => {
     const {id_profesor} = req.params;
       db.query('SELECT * FROM profesores WHERE id_profesor = ?', [id_profesor], (err, result)  => {
       if (err) throw err;
-      res.render('actualiPro', { profesores: result[0] });
+        res.render('editPro', { data: result[0] });
       });
   });
 
 // Actualizar profesor
-  router.post('/actualiPro/:id_profesor', (req, res) => {
+  router.post('/editPro/:id_profesor', (req, res) => {
     const {id_profesor} = req.params;
-    const { nombre, email } = req.body;
-    db.query('UPDATE profesores SET nombre = ?, email = ? WHERE id_profesor = ?',[nombre, email, id_profesor], (err) => {
+    const { nombre, email, dni, fecNac, sitRev, telefono, tomaPos, finTomaPos } = req.body;
+    db.query('UPDATE profesores SET nombre = ?, email = ?, dni = ?, fecNac = ?, sitRev = ?, telefono = ?, tomaPos = ?, finTomaPos = ? WHERE id_profesor = ?',[nombre, email, dni, fecNac, sitRev, telefono, tomaPos, finTomaPos, id_profesor], (err, result) => {
       if (err) throw err;
         res.redirect('/profesores');
       });
@@ -102,7 +95,7 @@ router.post('/nuevoProfesor', (req, res) => {
   router.get('/elimPro', (req, res) => {
     db.query('SELECT * FROM profesores', (err, results) => {
       if (err) throw err;
-          res.render('elimPro', { profesores: results });
+          res.render('elimPro', { data: results });
     });
   });
   router.get('/elimPro/:id_profesor', (req, res) => {
@@ -112,6 +105,22 @@ router.post('/nuevoProfesor', (req, res) => {
       res.redirect('/profesores');
     });
   }); 
+
+  //Buscar Profesores por Apellido
+  router.get('/buscarPro', (req, res) => {
+    res.render('buscarPro');
+  });
+
+  router.post('/buscarPro', (req, res) => {
+  const termino = req.body.nombre
+  const sql = ("SELECT * FROM profesores WHERE nombre LIKE ?")
+  db.query(sql, [`%${termino}%`], (err, resultados) => {
+        if (err) throw err;
+        res.render('profesores', { data: resultados });
+    });
+});
+
+
 
 //-------------------------------------------------------------------------------------------------------
 

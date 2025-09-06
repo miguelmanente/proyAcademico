@@ -1,28 +1,75 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Profesores</title>
-  </head>
+<html lang="es">
+
 <body>
-    <h1>Lista de Profesores</h1>
-    <table cellpadding="5">
-      <tr>
-      <th>ID</th>
-      <th>Apellido y Nombre</th>
-      <th>Email</th>
-      <th>Acciones</th>
-      </tr>
-      <% profesores.forEach(p => { %>
-      <tr>
-        <td><%= p.id_profesor %></td>
-        <td><%= p.nombre %></td>
-        <td><%= p.email %></td>
-        <td>
-          <a href="/elimPro/<%= p.id_profesor %>" onclick="return confirm('¿Eliminar profesor?')">🗑️ Eliminar</a>
-      </td>
-        </td>
-      </tr>
-      <% }) %>
-    </table>
+    <header>
+        <%- include('../views/partials/header'); %>
+    </header>
+   
+     <main>
+        <div class="container-">
+            <div class="row mt-3 ml-5 mr-5 ">
+                <div class="col-md-12 text-center">
+                    <h2>INFORMACIÓN DEL DOCENTE</h2> 
+                    <table class="table table-bordered table-hover table-responsive">
+                        <thead>
+                            <tr>
+                                <th class="border-primary">Nº</th>
+                                <th class="border-primary">APELLIDO NOMBRE</th>
+                                <th class="border-primary">EMAIL</th>
+                                <th class="border-primary">DNI</th>
+                                <th class="border-primary">FECHA NACIMIENTO</th>
+                                <th class="border-primary">SITUACIÓN REVISTA</th>
+                                <th class="border-primary">TELEFONO</th>
+                                <th class="border-primary">TOMA POSICIÓN</th>
+                                <th class="border-primary">FIN TOMA POSICIÓN</th>
+                                <th class="border-primary">BAJA DOCENTES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (data) { %>
+                                <% for (var i=0; i < data.length; i++) { %>
+                                    <tr>
+                                        <td class="border-primary">
+                                            <%= (i + 1) %>
+                                        </td>
+                                        <td class="border-primary">
+                                            <%= data[i].nombre %>
+                                        </td>
+                                      
+                                        <td class="border-primary">
+                                            <%= data[i].email %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].dni %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].fecNac %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].sitRev %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].telefono %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].tomaPos %>
+                                        </td>
+                                          <td class="border-primary">
+                                            <%= data[i].finTomaPos %>
+                                        </td>
+                                         <td class="border-primary">
+                                            <a href="/elimPro/<%= data[i].id_profesor %>" onclick="return confirm('¿Eliminar profesor?')">🗑️ Eliminar</a>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            <% } %>  
+                        </tbody>
+                    </table>
+                    <a href="index" class="btn btn-info btn-sm rounded-pill">Volver al inicio</a>
+                  </div>
+             </div>
+         </div>
+      </main>  
 </body>
 </html>
