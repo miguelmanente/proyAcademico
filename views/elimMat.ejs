@@ -15,9 +15,9 @@
                         <thead>
                             <tr>
                                 <th class="border-primary">Nº</th>
-                                <th class="border-primary">MATERIAS</th>
+                                <th class="border-primary">APELLIDO NOMBRE</th>
                                 <th class="border-primary">DESCRIPCIÓN</th>
-                                <th class="border-primary">MODIFICAR MATERIAS</th>
+                                <th class="border-primary">ELIMINAR MATERIAS</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,41 +34,19 @@
                                         <td class="border-primary">
                                             <%= data[i].descripcion %>
                                         </td>
-                               
+                          
                                          <td class="border-primary">
-                                            <a href="/editMateria/<%= data[i].id_materia %>" class="btn btn-warning btn-sm">Editar</a>
+                                            <a href="/elimMat/<%= data[i].id_materia %>" onclick="return confirm('¿Eliminas esta Materia?')">🗑️ Eliminar</a>
                                         </td>
                                     </tr>
                                 <% } %>
-                            <% } %>
-                            
+                            <% } %>  
                         </tbody>
                     </table>
-                  <a href="index" class="btn btn-info btn-sm rounded-pill">Volver al inicio</a>
+                    <a href="index" class="btn btn-info btn-sm rounded-pill">Volver al inicio</a>
                   </div>
              </div>
          </div>
       </main>  
 </body>
-</html> 
-     
-      
-
-      
-    
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<body>
+     <header>
+        <%- include('../views/partials/header'); %>
+    </header>
+
+    <div class="container-fluid ">
+      <div class="row mt-3 ml-2 mr-2 ">
+        <div class="col-md-5 table-responsive">
+          <h4>Buscar por Nombre de Materia</h4>
+          <form action="/buscarMat"  method="POST" class="form-control form-control-lg ">
+                <input type="text" name="nombre" placeholder="Nombre de la Materia" required >
+                <button type="submit" class="btn btn-success">Buscar</button> 
+          </form>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
