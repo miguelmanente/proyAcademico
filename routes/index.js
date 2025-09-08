@@ -36,7 +36,7 @@ router.get('/horarios', (req, res) => {
 router.get('/asignaciones', (req, res) => {
   const sql = `
     SELECT a.id_asignacion, p.nombre AS profesor, m.nombre AS materia, 
-           c.nombre AS curso, h.dia_semana, h.hora_inicio, h.hora_fin
+           c.nombre AS curso, h.dia_semana, h.hora_inicio, h.hora_fin, suplente
     FROM asignaciones a
     JOIN profesores p ON a.id_profesor = p.id_profesor
     JOIN materias m ON a.id_materia = m.id_materia
