@@ -1,33 +1,52 @@
-<h2>Nueva Asignación</h2>
-<form action="/asignaciones/nuevo" method="POST">
-  <label>Profesor:</label>
-  <select name="id_profesor" required>
-    <% profesores.forEach(p => { %>
-      <option value="<%= p.id_profesor %>"><%= p.nombre %></option>
-    <% }) %>
-  </select><br>
+<!DOCTYPE html>
+<html lang="es">
 
-  <label>Materia:</label>
-  <select name="id_materia" required>
-    <% materias.forEach(m => { %>
-      <option value="<%= m.id_materia %>"><%= m.nombre %></option>
-    <% }) %>
-  </select><br>
+<body>
+    <header>
+        <%- include('../views/partials/header'); %>
+    </header>
 
-  <label>Curso:</label>
-  <select name="id_curso" required>
-    <% cursos.forEach(c => { %>
-      <option value="<%= c.id_curso %>"><%= c.nombre %></option>
-    <% }) %>
-  </select><br>
+    <h1>Nueva Asignación</h1>
+    <form action="/nuevaAsignacion" method="POST">
 
-  <label>Horario:</label>
-  <select name="id_horario" required>
-    <% horarios.forEach(h => { %>
-      <option value="<%= h.id_horario %>"><%= h.dia_semana %> - <%= h.hora_inicio %> a <%= h.hora_fin %></option>
-    <% }) %>
-  </select><br>
+      <label>Profesor:</label>
+      <select name="id_profesor" required>
+        <option value="">Seleccione un profesor</option>
+        <% profesores.forEach(prof => { %>
+          <option value="<%= prof.id_profesor %>"><%= prof.nombre %></option>
+        <% }) %>
+      </select>
+      <br><br>
 
-  <button type="submit">Guardar</button>
-</form>
-<a href="/asignaciones">Volver</a>
+      <label>Materia:</label>
+      <select name="id_materia" required>
+        <option value="">Seleccione una materia</option>
+        <% materias.forEach(mat => { %>
+          <option value="<%= mat.id_materia %>"><%= mat.nombre %></option>
+        <% }) %>
+      </select>
+      <br><br>
+
+      <label>Curso:</label>
+      <select name="id_curso" required>
+        <option value="">Seleccione un curso</option>
+        <% cursos.forEach(cur => { %>
+          <option value="<%= cur.id_curso %>"><%= cur.nombre %></option>
+        <% }) %>
+      </select>
+      <br><br>
+
+      <label>Horario:</label>
+      <select name="id_horario" required>
+        <option value="">Seleccione un horario</option>
+        <% horarios.forEach(hor => { %>
+          <option value="<%= hor.id_horario %>"><%= hor.dia %> - <%= hor.hora_inicio %> a <%= hor.hora_fin %></option>
+        <% }) %>
+      </select>
+      <br><br>
+
+      <button type="submit">Guardar Asignación</button>
+    </form>
+</body> 
+</html> 
+

@@ -188,66 +188,51 @@ router.post('/nuevaMateria', (req, res) => {
     });
 });
 
-//========================================================  CURSOS  ===============================================
-/*
-// --- CURSOS ---
-router.get('/nuevoCurso', (req, res) => {
-  res.render('nuevoCurso');
-});
 
-router.post('/nuevoCurso', (req, res) => {
-  const { nombre, nivel } = req.body;
-  db.query('INSERT INTO cursos (nombre, nivel) VALUES (?, ?)', [nombre, nivel], (err) => {
-    if (err) throw err;
-    res.redirect('/cursos');
-  });
-});
+// ===================================================   ASIGNACIONES   =================================================
 
-// --- HORARIOS ---
-router.get('/nuevoHorario', (req, res) => {
-  res.render('nuevoHorario');
-});
+// Formulario para crear una nueva asignación
+  router.get('/nuevaAsignacion', (req, res) => {
+    const queries = [
+      'SELECT * FROM profesores',
+      'SELECT * FROM materias',
+      'SELECT * FROM cursos',
+      'SELECT * FROM horarios'
+    ];
 
-router.post('/nuevoHorario', (req, res) => {
-  const { dia_semana, hora_inicio, hora_fin } = req.body;
-  db.query('INSERT INTO horarios (dia_semana, hora_inicio, hora_fin) VALUES (?, ?, ?)', [dia_semana, hora_inicio, hora_fin], (err) => {
-    if (err) throw err;
-    res.redirect('/horarios');
-  });
-});
- */
-// --- ASIGNACIONES ---
-router.get('/nuevaAsignacion', (req, res) => {
-  const sql = `
-    SELECT * FROM profesores;
-    SELECT * FROM materias;
-    SELECT * FROM cursos;
-    SELECT * FROM horarios;
-  `;
-  db.query(sql, [1,2,3,4], (err, results) => {
-    if (err) throw err;
-    res.render('nuevaAsignacion', { 
-      profesores: results[0], 
-      materias: results[1], 
-      cursos: results[2], 
-      horarios: results[3] 
+    Promise.all(queries.map(q => new Promise((resolve, reject) => {
+      db.query(q, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
+    })))
+    .then(([profesores, materias, cursos, horarios]) => {
+      res.render('nuevaAsignacion', {
+        profesores,
+        materias,
+        cursos,
+        horarios
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error al cargar datos');
     });
   });
-});
 
-router.post('/nuevaAsignacion', (req, res) => {
-  const { id_profesor, id_materia, id_curso, id_horario } = req.body;
-  db.query(
-    'INSERT INTO asignaciones (id_profesor, id_materia, id_curso, id_horario) VALUES (?, ?, ?, ?)',
-    [id_profesor, id_materia, id_curso, id_horario],
-    (err) => {
-      if (err) throw err;
-      res.redirect('/asignaciones');
-    }
-  );
-});
+  // Guardar nueva asignación
+  router.post('/nuevaAsignacion', (req, res) => {
+    const { id_profesor, id_materia, id_curso, id_horario } = req.body;
 
-
+    db.query(
+      'INSERT INTO asignaciones (id_profesor, id_materia, id_curso, id_horario) VALUES (?, ?, ?, ?)',
+      [id_profesor, id_materia, id_curso, id_horario],
+      (err) => {
+        if (err) throw err;
+        res.redirect('/asignaciones');
+      }
+    );
+  });
 
 
 module.exports = router;
