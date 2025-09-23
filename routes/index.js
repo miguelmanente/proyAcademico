@@ -32,22 +32,7 @@ router.get('/horarios', (req, res) => {
   });
 });
 
-// Ver asignaciones (profesor, materia, curso, horario)
-router.get('/asignaciones', (req, res) => {
-  const sql = `
-    SELECT a.id_asignacion, p.nombre AS profesor, m.nombre AS materia, 
-           c.nombre AS curso, h.dia_semana, h.hora_inicio, h.hora_fin, suplente
-    FROM asignaciones a
-    JOIN profesores p ON a.id_profesor = p.id_profesor
-    JOIN materias m ON a.id_materia = m.id_materia
-    JOIN cursos c ON a.id_curso = c.id_curso
-    JOIN horarios h ON a.id_horario = h.id_horario
-  `;
-  db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.render('asignaciones', { data: results });
-  });
-});
+
 
 // ==================== PROFESORES ====================--------------------------------
 // Formulario
@@ -191,6 +176,24 @@ router.post('/nuevaMateria', (req, res) => {
 
 // ===================================================   ASIGNACIONES   =================================================
 
+// Ver asignaciones (profesor, materia, curso, horario)
+router.get('/asignaciones', (req, res) => {
+  const sql = `
+    SELECT a.id_asignacion, p.nombre AS profesor, m.nombre AS materia, 
+           c.nombre AS curso, h.dia_semana, h.hora_inicio, h.hora_fin, suplente
+    FROM asignaciones a
+    JOIN profesores p ON a.id_profesor = p.id_profesor
+    JOIN materias m ON a.id_materia = m.id_materia
+    JOIN cursos c ON a.id_curso = c.id_curso
+    JOIN horarios h ON a.id_horario = h.id_horario
+  `;
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.render('asignaciones', { data: results });
+  });
+});
+
+
 // Formulario para crear una nueva asignación
   router.get('/nuevaAsignacion', (req, res) => {
     const queries = [
@@ -222,11 +225,11 @@ router.post('/nuevaMateria', (req, res) => {
 
   // Guardar nueva asignación
   router.post('/nuevaAsignacion', (req, res) => {
-    const { id_profesor, id_materia, id_curso, id_horario } = req.body;
+    const { id_profesor, id_materia, id_curso, id_horario, suplente } = req.body;
 
     db.query(
-      'INSERT INTO asignaciones (id_profesor, id_materia, id_curso, id_horario) VALUES (?, ?, ?, ?)',
-      [id_profesor, id_materia, id_curso, id_horario],
+      'INSERT INTO asignaciones (id_profesor, id_materia, id_curso, id_horario, suplente) VALUES (?, ?, ?, ?, ?)',
+      [id_profesor, id_materia, id_curso, id_horario, suplente],
       (err) => {
         if (err) throw err;
         res.redirect('/asignaciones');
