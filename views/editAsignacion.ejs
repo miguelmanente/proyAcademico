@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<body>
+    <header>
+        <%- include('../views/partials/header'); %>
+    </header>
+   
+   <div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow p-4" style="max-width: 600px; width: 100%;">
+    <h1 class="h4 mb-4 text-center">EDITAR Y ACTUALIZAR ASIGNACIONES</h1>
+
+    <form action="/editAsignacion/<%= asignacion.id_asignacion %>" method="POST" class="text-start">
+
+      <!-- Profesor -->
+      <div class="mb-3">
+        <label class="form-label">PROFESOR</label>
+        <select name="id_profesor" class="form-select" required>
+          <% profesores.forEach(prof => { %>
+            <option value="<%= prof.id_profesor %>" <%= prof.id_profesor === asignacion.id_profesor ? 'selected' : '' %>>
+              <%= prof.nombre %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- Materia -->
+      <div class="mb-3">
+        <label class="form-label">MATERIA</label>
+        <select name="id_materia" class="form-select" required>
+          <% materias.forEach(mat => { %>
+            <option value="<%= mat.id_materia %>" <%= mat.id_materia === asignacion.id_materia ? 'selected' : '' %>>
+              <%= mat.nombre %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- Curso -->
+      <div class="mb-3">
+        <label class="form-label">CURSO</label>
+        <select name="id_curso" class="form-select" required>
+          <% cursos.forEach(cur => { %>
+            <option value="<%= cur.id_curso %>" <%= cur.id_curso === asignacion.id_curso ? 'selected' : '' %>>
+              <%= cur.nombre %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- DÍAS DE LA SEMANA -->
+   
+      <div class="mb-3">
+        <label class="form-label">DÍA DE LA SEMANA</label>
+        <select name="id_horario" class="form-select" required>
+          <% horarios.forEach(hor => { %>
+            <option value="<%= hor.id_horario %>" <%= hor.id_horario === asignacion.id_horario ? 'selected' : '' %>>
+              <%= hor.dia_semana %> - <%= hor.hora_inicio %> a <%= hor.hora_fin %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+      
+    <!-- Suplente -->
+      <div class="mb-3">
+        <label for="suplente" class="form-label">Suplente</label>
+        <input type="text" id="suplente" name="suplente" class="form-control" 
+               value="<%= asignacion.suplente %>" style="max-width: 400px;"
+               placeholder="Ingrese suplente">
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</div>

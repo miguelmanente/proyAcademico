@@ -22,6 +22,7 @@
                                 <th class="border-primary fs-5">HORA INICIO</th>
                                 <th class="border-primary fs-5">HORA FINAL</th>
                                  <th class="border-primary fs-5">SUPLENTE</th>
+                                 <th class="border-primary fs-5">ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,7 +44,7 @@
                                             <%= data[i].curso %>
                                         </td>
                                         
-                                        <td class="border-primary">
+                                       <td class="border-primary">
                                             <%= data[i].dia_semana %>
                                         </td>
 
@@ -58,6 +59,15 @@
                                         <td class="border-primary">
                                             <%= data[i].suplente%>
                                         </td>
+
+                                         <td class="border-primary">
+                                                <a href="/editAsignacion/<%= data[i].id_asignacion %>" class="btn btn-primary btn-sm">Editar</a>
+                                                <a href="/elimAsignacion/<%= data[i].id_asignacion %>" 
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Seguro que deseas eliminar esta asignación?')">
+                                                    Eliminar
+                                        </td>
+                                        
 
                                     </tr>
                                 <% } %>
