@@ -16,13 +16,7 @@ router.get('/profesores', (req, res) => {
 });
 
 
-// Listar Cursos
-router.get('/cursos', (req, res) => {
-  db.query('SELECT * FROM cursos', (err, results) => {
-    if (err) throw err;
-    res.render('cursos', { cursos: results });
-  });
-});
+
 
 // Listar Horarios
 router.get('/horarios', (req, res) => {
@@ -172,6 +166,64 @@ router.post('/nuevaMateria', (req, res) => {
         res.render('materias', { data: resultados });
     });
 });
+
+//===============================================  CURSOS  =============================================================
+
+// Listar Cursos
+router.get('/cursos', (req, res) => {
+  db.query('SELECT * FROM cursos', (err, results) => {
+    if (err) throw err;
+    res.render('cursos', { cursos: results });
+  });
+});
+
+// Altas Cursos
+router.get('/nuevoCurso', (req, res) => {
+  res.render('nuevoCurso');
+});
+
+router.post('/nuevoCurso', (req, res) => {
+  const { nombre, nivel } = req.body;
+  db.query('INSERT INTO cursos (nombre, nivel) VALUES (?, ?)', [nombre, nivel], (err) => {
+    if (err) throw err;
+    res.redirect('/cursos');
+  });
+});
+
+
+// Formulario para editar CURSOS
+  router.get('/editCursos/:id_curso', (req, res) => {
+    const {id_curso} = req.params;
+      db.query('SELECT * FROM cursos WHERE id_curso = ?', [id_curso], (err, result)  => {
+      if (err) throw err;
+        res.render('editCursos', { cursos: result[0] });
+      });
+  });
+
+// Actualizar CURSOS
+  router.post('/editCursos/:id_curso', (req, res) => {
+    const {id_curso} = req.params;
+    const { nombre, nivel } = req.body;
+    db.query('UPDATE cursos SET nombre = ?, nivel = ? WHERE id_curso = ?',[nombre, nivel, id_curso], (err, result) => {
+      if (err) throw err;
+        res.redirect('/cursos');
+      });
+  });
+
+   // Eliminar Cursos
+  router.get('/elimCurso', (req, res) => {
+    db.query('SELECT * FROM cursos', (err, results) => {
+      if (err) throw err;
+          res.render('elimCurso', { cursos: results });
+    });
+  });
+  router.get('/elimCurso/:id_curso', (req, res) => {
+    const {id_curso} = req.params;
+    db.query('DELETE FROM cursos WHERE id_curso=?', [id_curso], (err, results) => {
+      if (err) throw err;
+      res.redirect('/cursos');
+    });
+  });
 
 
 // ===================================================   ASIGNACIONES   =================================================
