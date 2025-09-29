@@ -223,7 +223,7 @@ router.get('/asignaciones', (req, res) => {
     });
   });
 
-  // Guardar nueva asignación
+// Guardar nueva asignación
   router.post('/nuevaAsignacion', (req, res) => {
     const { id_profesor, id_materia, id_curso, id_horario, suplente } = req.body;
 
@@ -237,64 +237,105 @@ router.get('/asignaciones', (req, res) => {
     );
   });
 
-  // Editar Asignación
+// Editar Asignación
 
-// rutas/asignaciones.js
+  router.get('/editAsignacion/:id_asignacion', (req, res) => {
+    const {id_asignacion} = req.params;
 
-router.get('/editAsignacion/:id_asignacion', (req, res) => {
-  const {id_asignacion} = req.params;
+    // Consulta de la asignación a editar
+    const sqlAsignacion = 'SELECT * FROM asignaciones WHERE id_asignacion = ?';
 
-  // Consulta de la asignación a editar
-  const sqlAsignacion = 'SELECT * FROM asignaciones WHERE id_asignacion = ?';
+    db.query(sqlAsignacion, [id_asignacion], (err, asignacionRes) => {
+      if (err) throw err;
+    
+      const asignacion = asignacionRes[0];
 
-  db.query(sqlAsignacion, [id_asignacion], (err, asignacionRes) => {
-    if (err) throw err;
-   
-    const asignacion = asignacionRes[0];
+      // Traemos las listas de opciones
+      const queries = [
+        'SELECT * FROM profesores',
+        'SELECT * FROM materias',
+        'SELECT * FROM cursos',
+        'SELECT * FROM horarios'
+      ];
 
-    // Traemos las listas de opciones
-    const queries = [
-      'SELECT * FROM profesores',
-      'SELECT * FROM materias',
-      'SELECT * FROM cursos',
-      'SELECT * FROM horarios'
-    ];
-
-    Promise.all(queries.map(q => new Promise((resolve, reject) => {
-      db.query(q, (err, result) => err ? reject(err) : resolve(result));
-    })))
-    .then(([profesores, materias, cursos, horarios]) => {
-      res.render('editAsignacion', { asignacion, profesores, materias, cursos, horarios });
-    })
-    .catch(err => { throw err });
+      Promise.all(queries.map(q => new Promise((resolve, reject) => {
+        db.query(q, (err, result) => err ? reject(err) : resolve(result));
+      })))
+      .then(([profesores, materias, cursos, horarios]) => {
+        res.render('editAsignacion', { asignacion, profesores, materias, cursos, horarios });
+      })
+      .catch(err => { throw err });
+    });
   });
-});
 
-// Guardar cambios
-router.post('/editAsignacion/:id_asignacion', (req, res) => {
-  const {id_asignacion} = req.params;
-  const { id_profesor, id_materia, id_curso, id_horario, suplente } = req.body;
+  // Guardar cambios
+  router.post('/editAsignacion/:id_asignacion', (req, res) => {
+    const {id_asignacion} = req.params;
+    const { id_profesor, id_materia, id_curso, id_horario, suplente } = req.body;
 
-  const sql = `
-    UPDATE asignaciones 
-    SET id_profesor=?, id_materia=?, id_curso=?, id_horario=?, suplente=? 
-    WHERE id_asignacion=?`;
+    const sql = `
+      UPDATE asignaciones 
+      SET id_profesor=?, id_materia=?, id_curso=?, id_horario=?, suplente=? 
+      WHERE id_asignacion=?`;
 
-  db.query(sql, [id_profesor, id_materia, id_curso, id_horario, suplente, id_asignacion], (err) => {
-    if (err) throw err;
-    res.redirect('/asignaciones');
+    db.query(sql, [id_profesor, id_materia, id_curso, id_horario, suplente, id_asignacion], (err) => {
+      if (err) throw err;
+      res.redirect('/asignaciones');
+    });
   });
-});
 
 
 // Eliminar asignación
-router.get('/eliminar/:id', (req, res) => {
-  const id = req.params.id;
-  db.query('DELETE FROM asignaciones WHERE id_asignacion=?', [id], (err) => {
+router.get('/asignaciones/:id_asignacion', (req, res) => {
+  const {id_asignacion} = req.params;
+  db.query('DELETE FROM asignaciones WHERE id_asignacion=?', [id_asignacion], (err) => {
     if (err) throw err;
     res.redirect('/asignaciones');
   });
 });
+
+
+ //Buscar Asignaciones por profesor
+
+// rutas/asignaciones.js
+
+router.get('/buscarAsig', (req, res) => {
+  const { profesor, curso } = req.query;
+
+  let sql = `
+    SELECT a.id_asignacion, 
+           p.nombre AS profesor, 
+           m.nombre AS materia, 
+           c.nombre AS curso, 
+           h.dia_semana, h.hora_inicio, h.hora_fin,
+           a.suplente
+    FROM asignaciones a
+    JOIN profesores p ON a.id_profesor = p.id_profesor
+    JOIN materias m   ON a.id_materia = m.id_materia
+    JOIN cursos c     ON a.id_curso   = c.id_curso
+    JOIN horarios h   ON a.id_horario = h.id_horario
+    WHERE 1=1
+  `;
+
+  const params = [];
+
+  // 👇 busca aunque escribas solo una parte del nombre o apellido
+  if (profesor && profesor.trim() !== '') {
+    sql += ' AND p.nombre LIKE ?';
+    params.push(`%${profesor}%`);
+  }
+
+  if (curso && curso.trim() !== '') {
+    sql += ' AND c.nombre LIKE ?';
+    params.push(`%${curso}%`);
+  }
+
+  db.query(sql, params, (err, result) => {
+    if (err) throw err;
+    res.render('buscarAsig', { asignaciones: result });
+  });
+});
+
 
 
 module.exports = router;

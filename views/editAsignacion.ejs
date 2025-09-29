@@ -5,8 +5,13 @@
     <header>
         <%- include('../views/partials/header'); %>
     </header>
+
+    <div class="container d-flex justify-content-end">
+        <a href="index" class="btn btn-info rounded-pill  mt-2  ml-5 width:30%">Volver al inicio</a> 
+    </div>
+    
    
-   <div class="container d-flex justify-content-center align-items-center min-vh-100">
+   <div class="container d-flex justify-content-center  min-vh-100">
   <div class="card shadow p-4" style="max-width: 600px; width: 100%;">
     <h1 class="h4 mb-4 text-center">EDITAR Y ACTUALIZAR ASIGNACIONES</h1>
 
@@ -51,7 +56,7 @@
       <!-- DÍAS DE LA SEMANA -->
    
       <div class="mb-3">
-        <label class="form-label">DÍA DE LA SEMANA</label>
+        <label class="form-label">DÍAS Y HORARIOS</label>
         <select name="id_horario" class="form-select" required>
           <% horarios.forEach(hor => { %>
             <option value="<%= hor.id_horario %>" <%= hor.id_horario === asignacion.id_horario ? 'selected' : '' %>>
